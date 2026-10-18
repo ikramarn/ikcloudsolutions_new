@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0f19" />
+      <stop offset="50%" stop-color="#1e1035" />
+      <stop offset="100%" stop-color="#090d16" />
+    </linearGradient>
+
+    <!-- Glow Gradient -->
+    <radialGradient id="cyberGlow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+      <stop offset="70%" stop-color="#06b6d4" stop-opacity="0.1" />
+      <stop offset="100%" stop-color="#0b0f19" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Accent Gradient -->
+    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="50%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+
+    <!-- Silhouette Gradient -->
+    <linearGradient id="suitGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="400" height="500" fill="url(#bgGrad)" />
+  
+  <!-- Cyber Glow Sphere -->
+  <circle cx="200" cy="190" r="160" fill="url(#cyberGlow)" />
+
+  <!-- Abstract Tech Grid Lines -->
+  <g opacity="0.15" stroke="#38bdf8" stroke-width="1">
+    <circle cx="200" cy="190" r="130" stroke-dasharray="4,6" fill="none" />
+    <circle cx="200" cy="190" r="150" stroke-dasharray="2,8" fill="none" />
+    <line x1="40" y1="190" x2="360" y2="190" stroke-dasharray="6,6" />
+    <line x1="200" y1="30" x2="200" y2="350" stroke-dasharray="6,6" />
+  </g>
+
+  <!-- Avatar Halo Ring -->
+  <circle cx="200" cy="180" r="105" fill="none" stroke="url(#neonGrad)" stroke-width="2.5" opacity="0.8" />
+  <circle cx="200" cy="180" r="95" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+
+  <!-- Avatar Head Silhouette -->
+  <circle cx="200" cy="165" r="42" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  
+  <!-- Hair Silhouette -->
+  <path d="M158 175 C158 120, 242 120, 242 175 C242 195, 235 220, 230 225 C225 210, 222 170, 220 160 C210 145, 190 145, 180 160 C178 170, 175 210, 170 225 C165 220, 158 195, 158 175 Z" fill="#334155" />
+
+  <!-- Modern Tech Glasses / Visor -->
+  <rect x="172" y="160" width="56" height="12" rx="6" fill="#06b6d4" opacity="0.85" />
+  <rect x="175" y="162" width="50" height="8" rx="4" fill="#a855f7" opacity="0.9" />
+
+  <!-- Body / Shoulders -->
+  <path d="M120 340 C120 260, 150 240, 200 240 C250 240, 280 260, 280 340 Z" fill="url(#suitGrad)" stroke="#334155" stroke-width="1.5" />
+  
+  <!-- Cyber Collar Line -->
+  <path d="M180 240 L200 280 L220 240" fill="none" stroke="url(#neonGrad)" stroke-width="2" />
+
+  <!-- Tech AI Badge / Nodes -->
+  <g transform="translate(185, 305)">
+    <circle cx="15" cy="15" r="14" fill="#0b0f19" stroke="#8b5cf6" stroke-width="1.5" />
+    <path d="M10 15 L15 10 L20 15 L15 20 Z" fill="#06b6d4" />
+  </g>
+  
+  <!-- Subtle futuristic data chips -->
+  <text x="200" y="420" font-family="'JetBrains Mono', monospace" font-size="11" fill="#94a3b8" text-anchor="middle" letter-spacing="3" opacity="0.8">
+    DATA &amp; AI ARCHITECT
+  </text>
+  <text x="200" y="440" font-family="'JetBrains Mono', monospace" font-size="9" fill="#06b6d4" text-anchor="middle" letter-spacing="2" opacity="0.7">
+    AGENTIC AI • AUTONOMOUS PIPELINES
+  </text>
+</svg>
