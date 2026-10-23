@@ -33,7 +33,7 @@ const link = (label: string, href: string, description?: string): NavLink => ({
   ...(description ? { description } : {}),
 });
 
-const aiFrontDeskLinks: readonly NavLink[] = [
+export const aiFrontDeskLinks: readonly NavLink[] = [
   link('Overview', '/ai-agents', 'What the AI Front Desk is'),
   link('Voice', '/ai-agents/voice', 'An AI receptionist for your calls'),
   link('WhatsApp', '/ai-agents/whatsapp', 'An AI assistant for your WhatsApp number'),

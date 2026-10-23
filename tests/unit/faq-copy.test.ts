@@ -7,6 +7,8 @@ import {
   stripLinkTokens,
   type FaqItem,
 } from '@/lib/copy/faq';
+import { hubFaq, howItWorksFaq, pricingFaq, voiceFaq, whatsappFaq } from '@/content/agents/faq';
+import { industries } from '@/content/agents/industries';
 import { faqJsonLd } from '@/lib/seo/jsonld';
 
 const modes: VatMode[] = ['exclusive', 'inclusive', 'not-registered'];
@@ -100,5 +102,51 @@ describe('link tokens', () => {
 
   it('strips tokens down to their label', () => {
     expect(stripLinkTokens('A {{link:/a|b}} and {{link:/c|d}}.')).toBe('A b and d.');
+  });
+});
+
+// Every real page FAQ: the same resolved array drives the Accordion and the FAQPage JSON-LD.
+const realFaqs: Record<string, readonly FaqItem[]> = {
+  hub: hubFaq,
+  pricing: pricingFaq,
+  voice: voiceFaq,
+  whatsapp: whatsappFaq,
+  'how-it-works': howItWorksFaq,
+  ...Object.fromEntries(industries.map((industry) => [industry.slug, industry.faq])),
+};
+
+describe.each(modes)('real page FAQs in %s VAT mode', (mode) => {
+  const ctx = buildCopyContext(withMode(mode));
+
+  it.each(Object.entries(realFaqs))(
+    '%s: JSON-LD answers equal resolved answers',
+    (_name, items) => {
+      const resolved = resolveFaq(items, ctx);
+      const jsonLd = JSON.parse(JSON.stringify(faqJsonLd(resolved))) as {
+        mainEntity: { name: string; acceptedAnswer: { text: string } }[];
+      };
+      expect(jsonLd.mainEntity.map((entity) => entity.name)).toEqual(
+        resolved.map((item) => item.question),
+      );
+      expect(jsonLd.mainEntity.map((entity) => entity.acceptedAnswer.text)).toEqual(
+        resolved.map((item) => stripLinkTokens(item.answer)),
+      );
+    },
+  );
+});
+
+describe('the pricing FAQ follows the VAT mode', () => {
+  const overage = (mode: VatMode) =>
+    resolveFaq(pricingFaq, buildCopyContext(withMode(mode))).find((item) => item.id === 'overage')
+      ?.answer;
+
+  it('shows inclusive rates with VAT applied', () => {
+    expect(overage('inclusive')).toContain('£0.24');
+    expect(overage('inclusive')).toContain('£0.024');
+  });
+
+  it('shows net rates otherwise', () => {
+    expect(overage('exclusive')).toContain('£0.20');
+    expect(overage('not-registered')).toContain('£0.20');
   });
 });

@@ -1,6 +1,6 @@
 import type { Route } from 'next';
 import { publicEnv } from '@/config/env';
-import type { Channel, PlanId } from '@/config/pricing';
+import type { AddonId, Channel, PlanId } from '@/config/pricing';
 import type { BillingPeriod } from '@/lib/money';
 
 export const INTAKE_PATH = '/ai-agents/get-started' as const;
@@ -9,6 +9,10 @@ export interface GetStartedOptions {
   plan?: PlanId;
   channel?: Channel;
   billing?: BillingPeriod;
+  /** Pre-selects an industry in the intake form. */
+  industry?: 'clinics' | 'estate-agents' | 'home-services';
+  /** Pre-selects add-ons in the intake form (unknown ids are dropped there). */
+  addons?: readonly AddonId[];
 }
 
 /**
@@ -24,6 +28,8 @@ function toQuery(opts: GetStartedOptions | undefined): string {
   if (opts?.plan) params.set('plan', opts.plan);
   if (opts?.channel) params.set('channel', opts.channel);
   if (opts?.billing) params.set('billing', opts.billing);
+  if (opts?.industry) params.set('industry', opts.industry);
+  if (opts?.addons && opts.addons.length > 0) params.set('addons', opts.addons.join(','));
   const query = params.toString();
   return query ? `?${query}` : '';
 }
