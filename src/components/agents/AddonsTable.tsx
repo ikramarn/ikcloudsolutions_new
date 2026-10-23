@@ -1,38 +1,16 @@
-import { pricingConfig, type Addon, type AddonId, type PricingConfig } from '@/config/pricing';
-import { displayAmount, formatMoney, priceIn, vatNote } from '@/lib/money';
+import { pricingConfig, type AddonId, type PricingConfig } from '@/config/pricing';
+import { addonPriceText } from '@/lib/pricing/addon-price';
 
-function priceParts(addon: Addon, config: PricingConfig): string[] {
-  const { currency, vat } = config;
-  const note = vatNote(vat.mode);
-  const show = (book: Addon['oneTime'], unit: string): string | null =>
-    book
-      ? [
-          formatMoney(displayAmount(priceIn(book, currency), vat), currency, {
-            dropZeroDecimals: true,
-          }),
-          unit,
-          note,
-        ]
-          .filter(Boolean)
-          .join(' ')
-      : null;
-  return [
-    show(addon.oneTime, 'one-time'),
-    show(addon.monthly, 'per month'),
-    show(addon.yearly, 'per year'),
-  ].filter((part): part is string => part !== null);
-}
-
-/**
- * Add-on prices are never discounted by the annual toggle. Each is labelled one-time, per month or
- * per year. Coming-soon items show no price commitment.
- */
 interface AddonsTableProps {
   config?: PricingConfig;
   /** Show only these add-ons (for example the website and domain on the websites page). */
   only?: readonly AddonId[];
 }
 
+/**
+ * Add-on prices are never discounted by the annual toggle. Each is labelled one-time, per month or
+ * per year. Coming-soon items show no price commitment.
+ */
 export function AddonsTable({ config = pricingConfig, only }: AddonsTableProps) {
   const addons = only ? config.addons.filter((addon) => only.includes(addon.id)) : config.addons;
   return (
@@ -65,7 +43,7 @@ export function AddonsTable({ config = pricingConfig, only }: AddonsTableProps) 
                   ) : null}
                 </th>
                 <td className="py-3 pr-4">
-                  {comingSoon ? 'To be confirmed' : priceParts(addon, config).join(' and ')}
+                  {comingSoon ? 'To be confirmed' : addonPriceText(addon, config)}
                 </td>
                 <td className="py-3 pr-4">
                   {comingSoon

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { Honeypot } from '@/components/forms/Honeypot';
+import { postLead } from '@/components/forms/lead-submit';
 import { TurnstileField, type TurnstileFieldHandle } from '@/components/forms/TurnstileField';
 import { Button } from '@/components/ui/Button';
 import { publicEnv } from '@/config/env';
@@ -11,42 +12,7 @@ import { siteConfig } from '@/config/site';
 import { firstErrorPerField } from '@/lib/validation/common';
 import { createLeadSchema, type LeadType } from '@/lib/validation/lead';
 
-export const LEAD_ENDPOINT = '/api/lead';
-const GENERIC_FAILURE = `We could not send your message. Please try again, or email ${siteConfig.email}.`;
-
 type Status = 'idle' | 'submitting' | 'success';
-
-interface FailureBody {
-  code?: unknown;
-  message?: unknown;
-  fields?: unknown;
-  reference?: unknown;
-}
-
-/** Success only when the HTTP status is OK AND the body says ok: true. */
-function isSuccess(response: Response, body: unknown): body is { ok: true; reference?: unknown } {
-  return (
-    response.ok &&
-    typeof body === 'object' &&
-    body !== null &&
-    (body as { ok?: unknown }).ok === true
-  );
-}
-
-function readError(body: unknown): FailureBody {
-  if (typeof body !== 'object' || body === null) return {};
-  const error = (body as { error?: unknown }).error;
-  return typeof error === 'object' && error !== null ? (error as FailureBody) : {};
-}
-
-function readFields(value: unknown): Record<string, string> {
-  if (typeof value !== 'object' || value === null) return {};
-  const fields: Record<string, string> = {};
-  for (const [key, message] of Object.entries(value)) {
-    if (typeof message === 'string') fields[key] = message;
-  }
-  return fields;
-}
 
 /** Text controls and selects by name; checkboxes become booleans. */
 function readFormValues(form: HTMLFormElement, names: readonly string[]): Record<string, unknown> {
@@ -152,50 +118,19 @@ export function LeadForm({
     setErrors({});
     setFailure(null);
 
-    try {
-      const response = await fetch(LEAD_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      let body: unknown = null;
-      try {
-        body = await response.json();
-      } catch {
-        // An unparseable body is a delivery failure, handled below.
-      }
-
-      if (isSuccess(response, body)) {
-        const issued = typeof body.reference === 'string' ? body.reference : '';
-        setReference(issued);
-        setStatus('success');
-        onSuccess?.(issued);
-        return;
-      }
-
-      const error = readError(body);
-      if (typeof error.reference === 'string') retryReference.current = error.reference;
-      const fields = readFields(error.fields);
-      const isValidation = error.code === 'validation_error' && Object.keys(fields).length > 0;
-      setStatus('idle');
-      resetCaptcha();
-      showErrors(
-        isValidation ? fields : {},
-        isValidation
-          ? null
-          : {
-              message: typeof error.message === 'string' ? error.message : GENERIC_FAILURE,
-              mailto: true,
-            },
-      );
-    } catch {
-      // Network failure: nothing reached the server.
-      setStatus('idle');
-      resetCaptcha();
-      showErrors({}, { message: GENERIC_FAILURE, mailto: true });
+    const result = await postLead(payload);
+    if (result.kind === 'success') {
+      setReference(result.reference);
+      setStatus('success');
+      onSuccess?.(result.reference);
+      return;
     }
+    if (result.reference) retryReference.current = result.reference;
+    setStatus('idle');
+    resetCaptcha();
+    if (result.kind === 'validation') showErrors(result.fields, null);
+    else showErrors({}, { message: result.message, mailto: true });
   }
-
   if (status === 'success') {
     return (
       <div

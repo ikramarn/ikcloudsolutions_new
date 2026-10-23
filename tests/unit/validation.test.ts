@@ -1,5 +1,10 @@
 import { firstErrorPerField } from '@/lib/validation/common';
-import { parseIntakePrefill, validateIntakeStep } from '@/lib/validation/intake';
+import {
+  intakeSteps,
+  parseIntakePrefill,
+  stepIndexForField,
+  validateIntakeStep,
+} from '@/lib/validation/intake';
 import {
   agentLeadSchema,
   contactSchema,
@@ -293,24 +298,50 @@ describe('per-type schemas', () => {
 });
 
 describe('intake', () => {
+  it('has six steps in order', () => {
+    expect(intakeSteps.map((step) => step.id)).toEqual([
+      'business',
+      'channels',
+      'plan',
+      'setup',
+      'contact',
+      'review',
+    ]);
+  });
+
   it('validates one step at a time', () => {
     expect(validateIntakeStep('business', {})).toHaveProperty('businessName');
     expect(
       validateIntakeStep('business', {
         businessName: 'Pennant Heating and Plumbing',
-        contactName: 'Alex Murray',
-        email: 'alex@example.com',
         industry: 'other',
       }),
     ).toHaveProperty('industryOther');
     expect(
-      validateIntakeStep('agent', {
-        channel: 'both',
-        plan: 'pro',
-        setupPreference: 'done-for-you',
+      validateIntakeStep('business', {
+        businessName: 'Pennant Heating and Plumbing',
+        industry: 'home-services',
       }),
     ).toEqual({});
+    expect(validateIntakeStep('channels', {})).toHaveProperty('channel');
+    expect(validateIntakeStep('channels', { channel: 'both' })).toEqual({});
+    expect(validateIntakeStep('plan', {})).toHaveProperty('plan');
+    expect(validateIntakeStep('plan', { plan: 'pro' })).toEqual({});
+    expect(validateIntakeStep('setup', {})).toHaveProperty('setupPreference');
+    expect(validateIntakeStep('contact', {})).toHaveProperty('contactName');
+    expect(
+      validateIntakeStep('contact', { contactName: 'Alex Murray', email: 'alex@example.com' }),
+    ).toEqual({});
     expect(validateIntakeStep('review', { consent: false })).toHaveProperty('consent');
+    expect(validateIntakeStep('review', { consent: true })).toEqual({});
+  });
+
+  it('maps a field to the step that owns it', () => {
+    expect(stepIndexForField('businessName')).toBe(0);
+    expect(stepIndexForField('plan')).toBe(2);
+    expect(stepIndexForField('email')).toBe(4);
+    expect(stepIndexForField('consent')).toBe(5);
+    expect(stepIndexForField('something-else')).toBe(5);
   });
 
   it('ignores invalid pre-fill values', () => {
@@ -322,5 +353,18 @@ describe('intake', () => {
     expect(
       parseIntakePrefill({ plan: 'gold', channel: ['voice', 'x'], billing: 'weekly' }),
     ).toEqual({ plan: undefined, channel: 'voice', billing: undefined });
+  });
+
+  it('pre-fills a valid industry and ignores an unknown one', () => {
+    expect(parseIntakePrefill({ industry: 'clinics' }).industry).toBe('clinics');
+    expect(parseIntakePrefill({ industry: 'bakery' }).industry).toBeUndefined();
+  });
+
+  it('keeps valid, unique add-on ids and drops unknown ones', () => {
+    expect(
+      parseIntakePrefill({ addons: 'website-express, domain,website-express,nonsense,,' }).addons,
+    ).toEqual(['website-express', 'domain']);
+    expect(parseIntakePrefill({ addons: 'nonsense' }).addons).toBeUndefined();
+    expect(parseIntakePrefill({}).addons).toBeUndefined();
   });
 });
