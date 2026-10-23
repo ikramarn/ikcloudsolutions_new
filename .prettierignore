@@ -1,0 +1,10 @@
+.next
+.worktrees
+coverage
+legacy
+node_modules
+package-lock.json
+playwright-report
+test-results
+docs/content-removed-report.md
+next-env.d.ts

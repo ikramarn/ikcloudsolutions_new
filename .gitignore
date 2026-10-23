@@ -13,6 +13,25 @@ dist-ssr
 *.local
 *.zip
 
+# Next.js
+.next
+next-env.d.ts
+.vercel
+
+# Environment files (names only in .env.example)
+.env
+.env*.local
+!.env.example
+
+# Test and tooling output
+playwright-report
+test-results
+coverage
+*.tsbuildinfo
+
+# Local worktrees
+.worktrees/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

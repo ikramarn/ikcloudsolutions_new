@@ -1,0 +1,19 @@
+{
+  "entry": [
+    "src/app/**/{page,layout,route,not-found,error,global-error,loading}.tsx",
+    "src/app/**/route.ts",
+    "src/app/**/{robots,sitemap,manifest,apple-icon}.{ts,tsx}",
+    "next.config.ts",
+    "tests/e2e/resend-stub.mjs",
+    "tests/**/*.{ts,tsx}",
+    "scripts/*.mjs"
+  ],
+  "project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx,mjs}", "scripts/**/*.mjs", "*.{ts,mjs}"],
+  "ignore": ["legacy/**", "src/data/_unverified-content.ts"],
+  "ignoreDependencies": [
+    "tailwindcss",
+    "@tailwindcss/postcss",
+    "prettier-plugin-tailwindcss",
+    "vite"
+  ]
+}
