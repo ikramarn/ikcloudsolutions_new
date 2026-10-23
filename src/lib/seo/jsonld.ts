@@ -1,9 +1,12 @@
 import type {
   BreadcrumbList,
+  ContactPage,
   FAQPage,
+  ItemList,
   Offer,
   OfferCatalog,
   Organization,
+  Person,
   ProfessionalService,
   Service,
   WebSite,
@@ -70,6 +73,57 @@ export function professionalServiceJsonLd(): WithContext<ProfessionalService> {
     address: postalAddress(),
     areaServed: 'United Kingdom',
     parentOrganization: { '@id': absolute('/#organization') },
+  };
+}
+
+/** Limited to facts we hold: no sameAs until verified profiles exist. */
+export function personJsonLd(): WithContext<Person> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: siteConfig.founder.name,
+    jobTitle: siteConfig.founder.role,
+    image: absolute(siteConfig.founder.image),
+    worksFor: { '@id': absolute('/#organization') },
+  };
+}
+
+export function contactPageJsonLd(path: string): WithContext<ContactPage> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    url: absolute(path),
+    name: `Contact ${siteConfig.name}`,
+    isPartOf: { '@id': absolute('/#website') },
+    about: { '@id': absolute('/#business') },
+  };
+}
+
+export interface ItemListEntry {
+  name: string;
+  description: string;
+  path: string;
+  serviceType: string;
+}
+
+/** An ItemList of Service nodes, for the services page. */
+export function serviceListJsonLd(items: readonly ItemListEntry[]): WithContext<ItemList> {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Service',
+        name: item.name,
+        description: item.description,
+        url: absolute(item.path),
+        serviceType: item.serviceType,
+        provider: { '@id': absolute('/#organization') },
+        areaServed: 'GB',
+      },
+    })),
   };
 }
 
