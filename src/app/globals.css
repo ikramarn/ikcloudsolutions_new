@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-deep: #07090e;
+  --color-surface: #0c111d;
+  --color-elevated: #131b2e;
+  --color-cyan-brand: #00f2fe;
+  --color-blue-brand: #3b82f6;
+  --color-violet-brand: #8b5cf6;
+  --color-emerald-brand: #10b981;
+
+  --font-sans: var(--font-plus-jakarta), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  --animate-pulse-glow: pulse-glow 4s infinite ease-in-out;
+  --animate-float: float-slow 6s infinite ease-in-out;
+
+  @keyframes pulse-glow {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes float-slow {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    background-color: var(--color-deep);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-deep);
+    color: #e2e8f0;
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  /* One visible focus ring everywhere: cyan outline with a dark inner ring for contrast. */
+  :focus-visible {
+    outline: 2px solid var(--color-cyan-brand);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px var(--color-deep);
+  }
+
+  /* 16px controls on small screens stop iOS zooming on focus. */
+  @media (max-width: 767px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-deep);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-cyan-brand);
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background: rgba(12, 17, 29, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-panel-glow {
+    background: rgba(12, 17, 29, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 242, 254, 0.18);
+    box-shadow: 0 0 25px -5px rgba(0, 242, 254, 0.08);
+  }
+
+  .glass-card {
+    background: linear-gradient(135deg, rgba(19, 27, 46, 0.6) 0%, rgba(12, 17, 29, 0.8) 100%);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    transition:
+      border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .glass-card:hover {
+      border-color: rgba(0, 242, 254, 0.35);
+      box-shadow: 0 12px 35px -8px rgba(0, 242, 254, 0.15);
+      transform: translateY(-3px);
+    }
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  }
+
+  .glow-button {
+    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+    box-shadow: 0 0 25px rgba(0, 242, 254, 0.35);
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .glow-button:hover {
+    box-shadow: 0 0 35px rgba(0, 242, 254, 0.55);
+  }
+
+  .glow-button-purple {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.35);
+    transition:
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .glow-button-purple:hover {
+    box-shadow: 0 0 35px rgba(139, 92, 246, 0.55);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .glow-button:hover,
+    .glow-button-purple:hover {
+      transform: translateY(-1px);
+    }
+  }
+
+  .cyber-grid {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  }
+
+  /* Static radial gradients replace the old blurred blobs, which hurt mobile performance. */
+  .bg-glow-cyan {
+    background-image: radial-gradient(
+      ellipse at center,
+      rgba(0, 242, 254, 0.14) 0%,
+      rgba(0, 242, 254, 0) 70%
+    );
+  }
+
+  .bg-glow-violet {
+    background-image: radial-gradient(
+      ellipse at center,
+      rgba(139, 92, 246, 0.16) 0%,
+      rgba(139, 92, 246, 0) 70%
+    );
+  }
+
+  /* No backdrop-filter on small or low-power screens: a solid translucent background instead. */
+  @media (max-width: 767px) {
+    .glass-panel,
+    .glass-panel-glow,
+    .glass-card {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .glass-panel,
+    .glass-panel-glow {
+      background: rgba(12, 17, 29, 0.96);
+    }
+
+    .glass-card {
+      background: linear-gradient(135deg, rgba(19, 27, 46, 0.95) 0%, rgba(12, 17, 29, 0.97) 100%);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [class*='animate-'] {
+    animation: none !important;
+  }
+}
