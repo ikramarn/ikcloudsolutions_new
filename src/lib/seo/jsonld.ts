@@ -10,6 +10,7 @@ import type {
   WithContext,
 } from 'schema-dts';
 import { siteConfig } from '@/config/site';
+import { stripLinkTokens } from '@/lib/copy/link-tokens';
 
 const origin = () => siteConfig.url;
 const absolute = (path: string) => `${origin()}${path}`;
@@ -103,7 +104,7 @@ export function faqJsonLd(items: readonly ResolvedFaq[]): WithContext<FAQPage> {
     mainEntity: items.map((item) => ({
       '@type': 'Question',
       name: item.question,
-      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      acceptedAnswer: { '@type': 'Answer', text: stripLinkTokens(item.answer) },
     })),
   };
 }

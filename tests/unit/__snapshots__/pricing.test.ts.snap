@@ -1,0 +1,268 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`config invariants > matches the config snapshot 1`] = `
+{
+  "addons": [
+    {
+      "availability": "available",
+      "description": "A 3 to 5 page site with hosting and updates, for businesses without one.",
+      "id": "website-express",
+      "monthly": {
+        "GBP": 1500,
+      },
+      "name": "AI website generator",
+      "oneTime": {
+        "GBP": 11900,
+      },
+    },
+    {
+      "availability": "available",
+      "description": "We register and connect a domain. You own the registration.",
+      "id": "domain",
+      "name": "Domain registration and connection",
+      "note": "Handling fee only. The registry price varies by extension and is paid at cost.",
+      "yearly": {
+        "GBP": 600,
+      },
+    },
+    {
+      "availability": "available",
+      "description": "An additional UK number routed to your agent.",
+      "id": "extra-number",
+      "monthly": {
+        "GBP": 500,
+      },
+      "name": "Extra UK phone number",
+    },
+    {
+      "availability": "available",
+      "description": "Help completing the business verification WhatsApp needs.",
+      "id": "meta-verification",
+      "name": "Meta business verification assistance",
+      "note": "Meta decides the outcome. It can take days to weeks.",
+      "oneTime": {
+        "GBP": 11900,
+      },
+    },
+    {
+      "availability": "available",
+      "description": "We write your agent knowledge base from up to about 20 pages of material.",
+      "id": "kb-essentials",
+      "name": "Knowledge-base writing (essentials)",
+      "oneTime": {
+        "GBP": 14900,
+      },
+    },
+    {
+      "availability": "available",
+      "description": "A full knowledge base written from your call recordings.",
+      "id": "kb-full",
+      "name": "Knowledge-base writing (full)",
+      "oneTime": {
+        "GBP": 39900,
+      },
+    },
+    {
+      "availability": "coming-soon",
+      "description": "A second language for your agent.",
+      "id": "extra-language",
+      "monthly": {
+        "GBP": 2500,
+      },
+      "name": "Additional language or voice",
+      "note": "Register interest. Not included in estimates yet.",
+    },
+    {
+      "availability": "available",
+      "description": "Adds the other channel to Starter, including that channel’s allowance.",
+      "id": "second-channel",
+      "monthly": {
+        "GBP": 3900,
+      },
+      "name": "Second channel for Starter",
+      "planRestriction": [
+        "starter",
+      ],
+    },
+    {
+      "availability": "available",
+      "description": "One more connection to a calendar or CRM.",
+      "id": "extra-integration",
+      "name": "Extra calendar or CRM integration",
+      "oneTime": {
+        "GBP": 7900,
+      },
+    },
+  ],
+  "annualDiscountPercent": 10,
+  "currency": "GBP",
+  "metaPricingUrl": "https://developers.facebook.com/docs/whatsapp/pricing",
+  "plans": [
+    {
+      "allowances": {
+        "agents": 1,
+        "changeHoursPerMonth": 0,
+        "integrations": 1,
+        "voiceMinutes": 200,
+        "whatsappAiReplies": 1000,
+      },
+      "channels": "one-of-voice-or-whatsapp",
+      "highlights": [
+        "Voice or WhatsApp, your choice",
+        "One agent for one location",
+        "One calendar or CRM connection",
+      ],
+      "id": "starter",
+      "monthly": {
+        "GBP": 7900,
+      },
+      "name": "Starter",
+      "overage": {
+        "voicePerMinuteTenthsPence": {
+          "GBP": 200,
+        },
+        "whatsappPerReplyTenthsPence": {
+          "GBP": 20,
+        },
+      },
+      "setup": {
+        "fee": {
+          "GBP": 39900,
+        },
+        "packageId": "launch",
+      },
+      "summary": "One channel, set up for a single location.",
+      "support": "Email and chat, UK business hours",
+    },
+    {
+      "allowances": {
+        "agents": 2,
+        "changeHoursPerMonth": 1,
+        "integrations": 3,
+        "voiceMinutes": 500,
+        "whatsappAiReplies": 5000,
+      },
+      "channels": "voice-and-whatsapp",
+      "featured": true,
+      "highlights": [
+        "Voice and WhatsApp on one account",
+        "Up to two agents or locations",
+        "Monthly tuning time included",
+      ],
+      "id": "pro",
+      "monthly": {
+        "GBP": 24900,
+      },
+      "name": "Pro",
+      "overage": {
+        "voicePerMinuteTenthsPence": {
+          "GBP": 200,
+        },
+        "whatsappPerReplyTenthsPence": {
+          "GBP": 20,
+        },
+      },
+      "setup": {
+        "fee": {
+          "GBP": 94900,
+        },
+        "packageId": "growth",
+      },
+      "summary": "Voice and WhatsApp together, with monthly tuning.",
+      "support": "Priority chat, UK business hours",
+    },
+    {
+      "allowances": {
+        "agents": 5,
+        "changeHoursPerMonth": 4,
+        "integrations": 8,
+        "voiceMinutes": 1200,
+        "whatsappAiReplies": 12000,
+      },
+      "channels": "voice-and-whatsapp",
+      "highlights": [
+        "Voice and WhatsApp on one account",
+        "Up to five agents or locations",
+        "Webhook and extra integrations",
+      ],
+      "id": "premium",
+      "monthly": {
+        "GBP": 64900,
+      },
+      "name": "Premium",
+      "overage": {
+        "voicePerMinuteTenthsPence": {
+          "GBP": 200,
+        },
+        "whatsappPerReplyTenthsPence": {
+          "GBP": 20,
+        },
+      },
+      "setup": {
+        "fee": {
+          "GBP": 195000,
+        },
+        "isFrom": true,
+        "packageId": "premium-build",
+      },
+      "summary": "Several locations, deeper integrations and a monthly review.",
+      "support": "Priority support with a monthly review call",
+    },
+  ],
+  "setupPackages": [
+    {
+      "fee": {
+        "GBP": 39900,
+      },
+      "id": "launch",
+      "includes": [
+        "One channel from a niche template",
+        "Fact sheet built from your site or a PDF of about 20 pages",
+        "One integration",
+        "One revision round",
+        "A 30-minute handoff call",
+      ],
+      "name": "Launch",
+      "typicalTimeline": "Indicative: about 5 business days",
+    },
+    {
+      "fee": {
+        "GBP": 94900,
+      },
+      "id": "growth",
+      "includes": [
+        "Voice and WhatsApp",
+        "Up to three integrations",
+        "Up to three call flows",
+        "WhatsApp template pack",
+        "Meta verification assistance",
+        "Two revision rounds",
+        "Staff walkthrough",
+      ],
+      "name": "Growth",
+      "typicalTimeline": "Indicative: about 10 business days",
+    },
+    {
+      "fee": {
+        "GBP": 195000,
+      },
+      "id": "premium-build",
+      "includes": [
+        "Multi-location or multi-language set-up",
+        "One custom integration",
+        "Optional website",
+        "Compliance review",
+        "Three revision rounds",
+        "Fourteen days of hypercare",
+      ],
+      "isFrom": true,
+      "name": "Premium build",
+      "typicalTimeline": "Indicative: about 15 to 20 business days",
+    },
+  ],
+  "vat": {
+    "mode": "exclusive",
+    "ratePercent": 20,
+  },
+}
+`;

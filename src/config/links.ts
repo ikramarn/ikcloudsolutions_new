@@ -1,14 +1,14 @@
 import type { Route } from 'next';
 import { publicEnv } from '@/config/env';
+import type { Channel, PlanId } from '@/config/pricing';
+import type { BillingPeriod } from '@/lib/money';
 
 export const INTAKE_PATH = '/ai-agents/get-started' as const;
 
-// Option value unions mirror the pricing config (plan ids, channels) and src/lib/money.ts
-// (billing periods). FEAT-002 can switch these to type imports once those modules exist.
 export interface GetStartedOptions {
-  plan?: 'starter' | 'pro' | 'premium';
-  channel?: 'voice' | 'whatsapp' | 'both';
-  billing?: 'monthly' | 'annual';
+  plan?: PlanId;
+  channel?: Channel;
+  billing?: BillingPeriod;
 }
 
 /**
