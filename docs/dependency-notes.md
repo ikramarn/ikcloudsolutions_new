@@ -28,3 +28,11 @@ All 40 pinned packages from the design manifest were checked with `npm view <nam
 ## CI note
 
 Run `npm run check` with `.next` and `next-env.d.ts` deleted. `typecheck` runs `next typegen` first so typed-route definitions exist on a fresh checkout.
+
+## Final state (hardening phase)
+
+- No version was substituted at any point: the 40 pinned packages are the 40 installed packages.
+- No dependency was added in this phase. The Lighthouse script reuses `@playwright/test` to launch Chrome, so `chrome-launcher` (a transitive dependency of `lighthouse`) is never imported directly.
+- `knip` 6.42.1 runs as part of `npm run check` and reports no unused files, exports or dependencies. `src/data/_unverified-content.ts` is the only ignored file, because it is a deliberate archive that nothing imports.
+- The Playwright suite builds the site twice (ports 3100 and 3101) because `NEXT_PUBLIC_*` values are inlined at build time. The second build has a Turnstile site key and writes to `.next-turnstile`, chosen through the `NEXT_DIST_DIR` variable that `next.config.ts` reads (unset everywhere else). Its type folders are pre-listed in `tsconfig.json`, so Next never rewrites that file during a test run.
+- Lighthouse 13.5.0 needs Node 22.19 or newer; the dev machine runs 24.12.0.
