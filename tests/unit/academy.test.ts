@@ -29,8 +29,8 @@ describe('sample course content', () => {
     const ids = sampleCourses.map((course) => course.id);
     expect(new Set(ids).size).toBe(ids.length);
     for (const course of sampleCourses) {
-      for (const module of course.modules) {
-        for (const lesson of module.lessons) {
+      for (const part of course.modules) {
+        for (const lesson of part.lessons) {
           expect(lesson.quiz.options.length, lesson.id).toBeGreaterThanOrEqual(2);
           expect(lesson.quiz.options[lesson.quiz.correctIndex], lesson.id).toBeDefined();
         }

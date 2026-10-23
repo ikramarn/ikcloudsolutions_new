@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 // Relative import on purpose: next.config.ts cannot use the @/ path alias.
+import { redirectRules } from './src/config/redirects';
 import { buildHeaders, deploymentTier, resolveSiteUrl } from './src/config/tier';
 
 const tier = deploymentTier();
@@ -29,6 +30,9 @@ const nextConfig: NextConfig = {
   env: {
     // Resolved once here so server and client bundles see the same canonical origin.
     NEXT_PUBLIC_SITE_URL: siteUrl,
+  },
+  redirects() {
+    return Promise.resolve(redirectRules.map((rule) => ({ ...rule })));
   },
   headers() {
     return Promise.resolve(buildHeaders(tier, process.env.NODE_ENV));

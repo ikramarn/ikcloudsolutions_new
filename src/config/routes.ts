@@ -1,3 +1,4 @@
+import type { PricingConfig } from '@/config/pricing';
 import { siteConfig } from '@/config/site';
 import { buildCopyContext } from '@/lib/copy/faq';
 
@@ -22,6 +23,11 @@ export interface RouteEntry {
   parent?: string;
   /** '/og/<card>' of this route's own card, or the nearest parent's. */
   ogImagePath: string;
+}
+
+/** Generated from the pricing config so the figure and VAT note can never drift. */
+export function pricingDescription(config?: PricingConfig): string {
+  return `Three monthly plans from ${buildCopyContext(config).displayPrice('starter', 'monthly')}, with included voice minutes and AI WhatsApp replies, clear overage and one-time setup fees.`;
 }
 
 export const routes: readonly RouteEntry[] = [
@@ -83,9 +89,7 @@ export const routes: readonly RouteEntry[] = [
   {
     path: '/ai-agents/pricing',
     title: 'AI Front Desk Pricing in GBP',
-    // Generated from the pricing config so the figure and VAT note can never drift.
-    description: () =>
-      `Three monthly plans from ${buildCopyContext().displayPrice('starter', 'monthly')}, with included voice minutes and AI WhatsApp replies, clear overage and one-time setup fees.`,
+    description: () => pricingDescription(),
     indexable: true,
     lastModified: '2026-10-22',
     breadcrumbLabel: 'Pricing',
