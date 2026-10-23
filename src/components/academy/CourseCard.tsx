@@ -25,7 +25,7 @@ const gradients: Record<ThumbnailGradient, string> = {
   amber: 'from-amber-600/50 via-slate-900 to-orange-950',
 };
 
-export function CourseThumbnail({ course, className }: { course: Course; className?: string }) {
+function CourseThumbnail({ course, className }: { course: Course; className?: string }) {
   const Icon = icons[course.thumbnail.icon];
   return (
     <div

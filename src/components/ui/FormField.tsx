@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
-export interface FieldControlProps {
+interface FieldControlProps {
   id: string;
   'aria-describedby': string | undefined;
   'aria-invalid': true | undefined;

@@ -8,7 +8,7 @@ export interface NavLink {
   badge?: 'NEW' | 'DEMO';
 }
 
-export interface NavGroup {
+interface NavGroup {
   heading: string;
   links: readonly NavLink[];
 }

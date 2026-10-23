@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 import { siteConfig } from '@/config/site';
 
-export const OG_SIZE = { width: 1200, height: 630 } as const;
+const OG_SIZE = { width: 1200, height: 630 } as const;
 
 export interface OgTemplateInput {
   title: string;

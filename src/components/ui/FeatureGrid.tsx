@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import { Card } from '@/components/ui/Card';
 import { cn } from '@/lib/cn';
 
-export interface Feature {
+interface Feature {
   title: string;
   description: ReactNode;
   icon?: LucideIcon;

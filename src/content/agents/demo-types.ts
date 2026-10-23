@@ -7,7 +7,7 @@ export interface DemoTurn {
   readonly delayMs?: number;
 }
 
-export interface DemoQuickReply {
+interface DemoQuickReply {
   readonly label: string;
   readonly nextScenarioId: string;
 }

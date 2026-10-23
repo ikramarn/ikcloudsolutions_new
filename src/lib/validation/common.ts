@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 /** Unambiguous alphabet for lead references (no 0/1/I/L/O). 31 characters. */
 export const REFERENCE_ALPHABET = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
-export const REFERENCE_PATTERN = /^IK-[2-9A-HJKMNP-Z]{8}$/;
+const REFERENCE_PATTERN = /^IK-[2-9A-HJKMNP-Z]{8}$/;
 
 // Control characters other than tab (0x09), line feed (0x0A) and carriage return (0x0D).
 const CONTROL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
@@ -20,7 +20,7 @@ export function cleanSingleLine(value: string): string {
 }
 
 /** Several lines: line endings become \n, control characters go. */
-export function cleanMultiline(value: string): string {
+function cleanMultiline(value: string): string {
   return value
     .normalize('NFC')
     .replace(CONTROL, '')
@@ -97,7 +97,7 @@ export const phoneField = z
 const HAS_SCHEME = /^[a-z][a-z0-9+.-]*:(?!\d)/i;
 
 /** "example.com" -> "https://example.com". Other schemes are left alone so they are rejected. */
-export function normaliseUrl(raw: string): string {
+function normaliseUrl(raw: string): string {
   const value = raw.trim();
   if (value === '') return value;
   return HAS_SCHEME.test(value) ? value : `https://${value}`;

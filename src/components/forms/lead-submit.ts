@@ -1,8 +1,8 @@
 import { siteConfig } from '@/config/site';
 
-export const LEAD_ENDPOINT = '/api/lead';
+const LEAD_ENDPOINT = '/api/lead';
 
-export const GENERIC_FAILURE = `We could not send your message. Please try again, or email ${siteConfig.email}.`;
+const GENERIC_FAILURE = `We could not send your message. Please try again, or email ${siteConfig.email}.`;
 
 export type LeadResult =
   | { kind: 'success'; reference: string }

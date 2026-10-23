@@ -138,7 +138,7 @@ export function validateLessonForm(values: LessonFormValues): FormErrors {
 }
 
 /** A short random suffix is enough here: ids only need to be unique inside one browser. */
-export function newId(prefix: string): string {
+function newId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
 }
 

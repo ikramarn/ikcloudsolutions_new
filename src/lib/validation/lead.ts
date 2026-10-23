@@ -16,8 +16,7 @@ import {
   turnstileTokenField,
 } from '@/lib/validation/common';
 
-export const LEAD_TYPES = ['contact', 'consultation', 'agent-lead'] as const;
-export type LeadType = (typeof LEAD_TYPES)[number];
+export type LeadType = 'contact' | 'consultation' | 'agent-lead';
 
 export const SERVICE_INTERESTS = [
   'Multi-cloud DevOps',
@@ -50,8 +49,8 @@ export const MONTHLY_SPEND_BANDS = [
 export const TIME_WINDOWS = ['morning', 'afternoon', 'evening'] as const;
 export const INDUSTRIES = ['clinics', 'estate-agents', 'home-services', 'other'] as const;
 export const BILLING_PERIODS = ['monthly', 'annual'] as const;
-export const SETUP_PREFERENCES = ['done-for-you', 'self-serve-later'] as const;
-export const PLAN_CHOICES = [...PLAN_IDS, 'not-sure'] as const;
+const SETUP_PREFERENCES = ['done-for-you', 'self-serve-later'] as const;
+const PLAN_CHOICES = [...PLAN_IDS, 'not-sure'] as const;
 
 const PREFERRED_DATE_WINDOW_DAYS = 90;
 const CHOOSE = { error: 'Choose an option' };
@@ -125,7 +124,7 @@ const uniqueAddons = z
   .max(ADDON_IDS.length, 'Too many add-ons')
   .refine((ids) => new Set(ids).size === ids.length, 'Each add-on can only be chosen once');
 
-export const agentLeadShape = {
+const agentLeadShape = {
   type: z.literal('agent-lead'),
   ...common,
   contactName: requiredText('Your name', 2, 100),
@@ -156,7 +155,7 @@ export function refineIndustry(
 }
 
 /** A stale website typed before ticking "no website" never reaches the email. */
-export function refineWebsite<T extends { hasNoWebsite: boolean; websiteUrl?: string | undefined }>(
+function refineWebsite<T extends { hasNoWebsite: boolean; websiteUrl?: string | undefined }>(
   value: T,
 ): T {
   return value.hasNoWebsite ? { ...value, websiteUrl: undefined } : value;
@@ -193,6 +192,4 @@ export function createLeadSchema(now: () => Date = () => new Date()) {
 }
 
 export type Lead = z.output<ReturnType<typeof createLeadSchema>>;
-export type ContactLead = Extract<Lead, { type: 'contact' }>;
-export type ConsultationLead = Extract<Lead, { type: 'consultation' }>;
 export type AgentLead = Extract<Lead, { type: 'agent-lead' }>;

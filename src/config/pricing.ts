@@ -32,8 +32,7 @@ export type PlanId = (typeof PLAN_IDS)[number];
 export const CHANNELS = ['voice', 'whatsapp', 'both'] as const;
 export type Channel = (typeof CHANNELS)[number];
 
-export const SETUP_PACKAGE_IDS = ['launch', 'growth', 'premium-build'] as const;
-export type SetupPackageId = (typeof SETUP_PACKAGE_IDS)[number];
+type SetupPackageId = 'launch' | 'growth' | 'premium-build';
 
 export const ADDON_IDS = [
   'website-express',
@@ -50,7 +49,7 @@ export type AddonId = (typeof ADDON_IDS)[number];
 
 // Voice minutes and chat replies are different fields everywhere. There is intentionally no
 // combined "units" field.
-export interface PlanAllowances {
+interface PlanAllowances {
   /** Included AI voice minutes per month, available when the voice channel is active. */
   readonly voiceMinutes: number;
   /** Included AI WhatsApp replies per month, available when the WhatsApp channel is active. */
@@ -86,7 +85,7 @@ export interface Plan {
   readonly highlights: readonly string[];
 }
 
-export interface SetupPackage {
+interface SetupPackage {
   readonly id: SetupPackageId;
   readonly name: string;
   readonly fee: PriceBook;

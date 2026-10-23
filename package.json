@@ -19,7 +19,7 @@
     "test:e2e": "playwright test",
     "lighthouse": "node scripts/lighthouse.mjs",
     "knip": "knip",
-    "check": "npm run typecheck && npm run lint && npm run format:check && npm test"
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm test && npm run knip"
   },
   "dependencies": {
     "@marsidev/react-turnstile": "1.6.3",

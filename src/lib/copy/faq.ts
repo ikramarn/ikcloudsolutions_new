@@ -66,4 +66,4 @@ export function resolveFaq(
   }));
 }
 
-export { parseLinkTokens, stripLinkTokens, type AnswerPart } from '@/lib/copy/link-tokens';
+export { parseLinkTokens, stripLinkTokens } from '@/lib/copy/link-tokens';

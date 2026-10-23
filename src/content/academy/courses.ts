@@ -27,7 +27,7 @@ export interface Quiz {
   explanation: string;
 }
 
-export interface LessonResource {
+interface LessonResource {
   label: string;
   href: string;
 }
@@ -48,7 +48,7 @@ export interface Lesson {
   resources: LessonResource[];
 }
 
-export interface CourseModule {
+interface CourseModule {
   id: string;
   title: string;
   lessons: Lesson[];
@@ -68,8 +68,7 @@ export interface Course {
 }
 
 // Placeholder videos hosted by a third party. They may disappear and are labelled as samples.
-export const SAMPLE_VIDEO_BASE =
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/';
+const SAMPLE_VIDEO_BASE = 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/';
 export const DEFAULT_SAMPLE_VIDEO = `${SAMPLE_VIDEO_BASE}BigBuckBunny.mp4`;
 const video = (name: string) => `${SAMPLE_VIDEO_BASE}${name}.mp4`;
 

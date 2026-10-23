@@ -1,13 +1,13 @@
 import 'server-only';
 import type { LeadType } from '@/lib/validation/lead';
 
-export type LogLevel = 'info' | 'warn' | 'error';
+type LogLevel = 'info' | 'warn' | 'error';
 
 /**
  * The only fields that can be logged. Names, emails, phones, free text, IP addresses and tokens
  * have no field here, so passing them is a type error.
  */
-export interface LogFields {
+interface LogFields {
   ref?: string;
   type?: LeadType;
   status?: number;

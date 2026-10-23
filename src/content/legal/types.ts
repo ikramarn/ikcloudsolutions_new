@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export interface LegalSection {
+interface LegalSection {
   /** Anchor id used by the table of contents. */
   id: string;
   heading: string;

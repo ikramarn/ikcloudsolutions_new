@@ -11,8 +11,8 @@ import type { BillingPeriod } from '@/lib/money';
 import type { IntakePrefill } from '@/lib/validation/intake';
 
 export type IndustryChoice = 'clinics' | 'estate-agents' | 'home-services' | 'other';
-export type PlanChoice = PlanId | 'not-sure';
-export type SetupPreference = 'done-for-you' | 'self-serve-later';
+type PlanChoice = PlanId | 'not-sure';
+type SetupPreference = 'done-for-you' | 'self-serve-later';
 
 /** Everything the wizard holds in memory. Nothing is stored in the browser. */
 export interface IntakeValues {
@@ -57,7 +57,7 @@ export function initialValues(prefill: IntakePrefill = {}): IntakeValues {
 }
 
 /** Starter with both channels needs the second-channel add-on, so it is added and locked. */
-export function isSecondChannelLocked(values: Pick<IntakeValues, 'plan' | 'channel'>): boolean {
+function isSecondChannelLocked(values: Pick<IntakeValues, 'plan' | 'channel'>): boolean {
   return values.plan === 'starter' && values.channel === 'both';
 }
 

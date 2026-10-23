@@ -3,7 +3,7 @@ import { publicEnv } from '@/config/env';
 import type { AddonId, Channel, PlanId } from '@/config/pricing';
 import type { BillingPeriod } from '@/lib/money';
 
-export const INTAKE_PATH = '/ai-agents/get-started' as const;
+const INTAKE_PATH = '/ai-agents/get-started' as const;
 
 export interface GetStartedOptions {
   plan?: PlanId;

@@ -13,9 +13,8 @@ afterEach(() => {
 describe('getStartedHref without NEXT_PUBLIC_APP_URL', () => {
   it('points at the on-site intake', async () => {
     vi.stubEnv('NEXT_PUBLIC_APP_URL', '');
-    const { getStartedHref, isExternalCta, INTAKE_PATH } = await loadLinks();
+    const { getStartedHref, isExternalCta } = await loadLinks();
     expect(getStartedHref()).toBe('/ai-agents/get-started');
-    expect(INTAKE_PATH).toBe('/ai-agents/get-started');
     expect(isExternalCta(getStartedHref())).toBe(false);
   });
 

@@ -40,7 +40,7 @@ const lessonSchema = z.object({
   resources: z.array(z.object({ label: z.string().max(160), href: httpUrl })).max(10),
 });
 
-export const courseSchema = z.object({
+const courseSchema = z.object({
   id: z.string().min(1).max(80),
   title: z.string().min(1).max(160),
   subtitle: z.string().max(300),

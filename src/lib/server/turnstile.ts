@@ -2,7 +2,7 @@ import 'server-only';
 import { deploymentTier, type DeploymentTier } from '@/config/tier';
 
 const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
-export const TURNSTILE_TIMEOUT_MS = 4000;
+const TURNSTILE_TIMEOUT_MS = 4000;
 
 // Cloudflare's published always-pass and always-fail dummy secrets start with 1x, 2x or 3x
 // followed by zeros (for example 1x0000000000000000000000000000000AA).

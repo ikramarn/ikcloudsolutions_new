@@ -8,7 +8,7 @@ import { escapeHtml, stripCrlf } from '@/lib/server/sanitize';
 import type { AgentLead, Lead } from '@/lib/validation/lead';
 
 /** Version of the wording shown next to the consent checkbox. Bump when that wording changes. */
-export const CONSENT_VERSION = 'v1';
+const CONSENT_VERSION = 'v1';
 
 export interface LeadEmailContext {
   reference: string;

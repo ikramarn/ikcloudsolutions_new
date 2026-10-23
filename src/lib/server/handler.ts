@@ -25,7 +25,7 @@ import { REFERENCE_ALPHABET, firstErrorPerField } from '@/lib/validation/common'
 import { createLeadSchema, type Lead } from '@/lib/validation/lead';
 
 export const MAX_BODY_BYTES = 32_768;
-export const PROVIDER_TIMEOUT_MS = 8000;
+const PROVIDER_TIMEOUT_MS = 8000;
 
 export interface LeadDeps {
   env: ServerEnv;

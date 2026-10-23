@@ -25,7 +25,7 @@ function readFormValues(form: HTMLFormElement, names: readonly string[]): Record
   return values;
 }
 
-export interface LeadFormRenderContext {
+interface LeadFormRenderContext {
   /** Field-level error by field name, from the shared schema or the server. */
   errors: Record<string, string>;
 }
