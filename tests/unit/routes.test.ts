@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { pricingConfig, type PricingConfig } from '@/config/pricing';
+import { footerColumns, headerItems } from '@/config/navigation';
 import { isIndexable, pricingDescription, resolveDescription, routes } from '@/config/routes';
 import { OG_CARD_IDS, ogCards } from '@/content/og';
 import { isFutureDate } from '@/lib/dates';
@@ -131,6 +132,29 @@ describe('route registry', () => {
     for (const route of routes) {
       expect(route).not.toHaveProperty('priority');
       expect(route).not.toHaveProperty('changeFrequency');
+    }
+  });
+
+  it('links only to registry routes from the header and footer, and reaches every route', () => {
+    const registered = new Set(routes.map((route) => route.path));
+    const navPaths = new Set<string>(['/']);
+    const collect = (href: string | undefined) => {
+      if (!href) return;
+      const path = href.split('#')[0] ?? '';
+      expect(registered.has(path), href).toBe(true);
+      navPaths.add(path);
+    };
+    for (const item of headerItems) {
+      collect(item.href);
+      for (const group of item.groups ?? []) for (const link of group.links) collect(link.href);
+    }
+    for (const column of footerColumns) for (const link of column.links) collect(link.href);
+    // Reached from page content instead: the intake (every "Get started" button) and the
+    // Academy studio (linked from /academy only).
+    const contentOnly = new Set(['/ai-agents/get-started', '/academy/studio']);
+    for (const route of routes) {
+      if (contentOnly.has(route.path)) continue;
+      expect(navPaths.has(route.path), `${route.path} is not in the header or footer`).toBe(true);
     }
   });
 
