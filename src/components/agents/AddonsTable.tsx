@@ -1,4 +1,5 @@
 import { pricingConfig, type AddonId, type PricingConfig } from '@/config/pricing';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
 import { addonPriceText } from '@/lib/pricing/addon-price';
 
 interface AddonsTableProps {
@@ -14,7 +15,7 @@ interface AddonsTableProps {
 export function AddonsTable({ config = pricingConfig, only }: AddonsTableProps) {
   const addons = only ? config.addons.filter((addon) => only.includes(addon.id)) : config.addons;
   return (
-    <div className="overflow-x-auto">
+    <ScrollRegion label="Add-ons and their prices">
       <table className="w-full min-w-[36rem] text-left">
         <caption className="sr-only">Add-ons and their prices</caption>
         <thead>
@@ -57,6 +58,6 @@ export function AddonsTable({ config = pricingConfig, only }: AddonsTableProps) 
           })}
         </tbody>
       </table>
-    </div>
+    </ScrollRegion>
   );
 }

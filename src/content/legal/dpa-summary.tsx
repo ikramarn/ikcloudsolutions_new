@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Ph } from '@/components/legal/Placeholder';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
 import type { LegalDocument } from '@/content/legal/types';
 
 interface Subprocessor {
@@ -94,7 +95,7 @@ export const dpaSummaryDocument: LegalDocument = {
             This list is a plan, not a commitment. We will tell customers before we add or replace a
             subprocessor.
           </p>
-          <div className="overflow-x-auto">
+          <ScrollRegion label="Planned subprocessors">
             <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
               <caption className="sr-only">Planned subprocessors</caption>
               <thead>
@@ -122,7 +123,7 @@ export const dpaSummaryDocument: LegalDocument = {
                 ))}
               </tbody>
             </table>
-          </div>
+          </ScrollRegion>
         </>
       ),
     },

@@ -1,5 +1,6 @@
 import { cookiesAnalyticsCopy } from '@/components/consent/copy';
 import { CookieSettings } from '@/components/consent/CookieSettings';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
 import type { LegalDocument } from '@/content/legal/types';
 import { storageInventory } from '@/content/legal/storage-inventory';
 
@@ -20,7 +21,7 @@ export function cookiesDocument(analyticsEnabled: boolean): LegalDocument {
         id: 'inventory',
         heading: 'What is stored',
         body: (
-          <div className="overflow-x-auto">
+          <ScrollRegion label="Items stored by this website">
             <table className="w-full min-w-[40rem] border-collapse text-left text-sm">
               <caption className="sr-only">Items stored by this website</caption>
               <thead>
@@ -56,7 +57,7 @@ export function cookiesDocument(analyticsEnabled: boolean): LegalDocument {
                 ))}
               </tbody>
             </table>
-          </div>
+          </ScrollRegion>
         ),
       },
       {

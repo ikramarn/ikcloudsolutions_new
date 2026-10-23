@@ -1,4 +1,5 @@
 import { pricingConfig, type PricingConfig } from '@/config/pricing';
+import { ScrollRegion } from '@/components/ui/ScrollRegion';
 import { displayUnitRate, priceIn, vatPhrase } from '@/lib/money';
 
 /** Overage rates, rendered through displayUnitRate so the VAT mode applies exactly. */
@@ -19,7 +20,7 @@ export function OverageTable({ config = pricingConfig }: { config?: PricingConfi
     },
   ];
   return (
-    <div className="overflow-x-auto">
+    <ScrollRegion label="Overage rates by plan">
       <table className="w-full min-w-[32rem] text-left">
         <caption className="mb-3 text-left text-slate-300">
           Charged only for use above your monthly allowance. {vatPhrase(vat.mode, vat.ratePercent)}
@@ -51,6 +52,6 @@ export function OverageTable({ config = pricingConfig }: { config?: PricingConfi
           ))}
         </tbody>
       </table>
-    </div>
+    </ScrollRegion>
   );
 }

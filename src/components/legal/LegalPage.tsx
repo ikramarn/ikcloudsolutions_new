@@ -21,7 +21,7 @@ export function LegalPage({ doc }: { doc: LegalDocument }) {
           <p className="mb-8 text-sm text-slate-300">
             Last updated: <time dateTime={doc.lastUpdated}>{formatLongDate(doc.lastUpdated)}</time>
           </p>
-          <div className="grid gap-10 lg:grid-cols-[16rem_1fr]">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[16rem_minmax(0,1fr)]">
             <nav aria-label="On this page" className="lg:sticky lg:top-24 lg:self-start">
               <h2 className="mb-3 font-mono text-xs font-bold tracking-wider text-white uppercase">
                 On this page

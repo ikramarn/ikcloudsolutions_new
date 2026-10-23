@@ -44,7 +44,12 @@ function LessonTabs({
             This output is an example written for the lesson. It was not produced by a real
             environment.
           </p>
-          <pre className="overflow-x-auto rounded-lg border border-white/10 bg-black/60 p-4 font-mono text-xs text-slate-200">
+          <pre
+            role="region"
+            aria-label="Illustrative terminal output"
+            tabIndex={0}
+            className="overflow-x-auto rounded-lg border border-white/10 bg-black/60 p-4 font-mono text-xs text-slate-200"
+          >
             <span className="text-cyan-300">$ {lesson.terminalCommand}</span>
             {'\n'}
             {lesson.terminalOutput}
