@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { ConsultationButton } from '@/components/forms/ConsultationButton';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Container } from '@/components/ui/Container';
@@ -39,6 +40,9 @@ export function SiteHeader() {
           </ul>
         </nav>
         <div className="flex items-center gap-2">
+          <ConsultationButton variant="ghost" size="sm" className="hidden lg:inline-flex">
+            Book a consultation
+          </ConsultationButton>
           <Button href={getStartedHref()} size="sm" className="hidden lg:inline-flex">
             {HEADER_CTA_LABEL}
           </Button>

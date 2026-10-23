@@ -3,6 +3,7 @@ import { JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ConsentProvider } from '@/components/consent/ConsentProvider';
 import { CookieBanner } from '@/components/consent/CookieBanner';
+import { ConsultationProvider } from '@/components/forms/ConsultationProvider';
 import { PurgeLegacyStorage } from '@/components/consent/PurgeLegacyStorage';
 import { SiteFooter } from '@/components/layout/SiteFooter';
 import { SiteHeader } from '@/components/layout/SiteHeader';
@@ -47,12 +48,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en-GB" className={`${plusJakarta.variable} ${jetBrainsMono.variable}`}>
       <body>
         <ConsentProvider>
-          <SkipLink />
-          <SiteHeader />
-          <main id="main">{children}</main>
-          <SiteFooter />
-          <CookieBanner />
-          <PurgeLegacyStorage />
+          <ConsultationProvider>
+            <SkipLink />
+            <SiteHeader />
+            <main id="main">{children}</main>
+            <SiteFooter />
+            <CookieBanner />
+            <PurgeLegacyStorage />
+          </ConsultationProvider>
         </ConsentProvider>
         <JsonLd data={organizationJsonLd()} />
         <JsonLd data={websiteJsonLd()} />

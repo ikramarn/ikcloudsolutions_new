@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { ConsultationButton } from '@/components/forms/ConsultationButton';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { getStartedHref } from '@/config/links';
@@ -86,10 +87,13 @@ export function MobileNav() {
               ))}
             </ul>
           </nav>
-          <div className="mt-6">
+          <div className="mt-6 space-y-3">
             <Button href={getStartedHref()} onClick={close} className="w-full">
               {HEADER_CTA_LABEL}
             </Button>
+            <ConsultationButton variant="secondary" onClick={close} className="w-full">
+              Book a consultation
+            </ConsultationButton>
           </div>
         </Dialog.Content>
       </Dialog.Portal>
