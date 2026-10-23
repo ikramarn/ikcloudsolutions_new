@@ -57,11 +57,16 @@ const config = defineConfig([
       ],
     },
   },
+  {
+    // Command-line scripts print their results to the terminal.
+    files: ['scripts/**/*.mjs'],
+    rules: { 'no-console': 'off' },
+  },
   globalIgnores([
     '.next/**',
+    '.next-*/**',
     'out/**',
     'coverage/**',
-    'legacy/**',
     'playwright-report/**',
     'test-results/**',
     '.worktrees/**',

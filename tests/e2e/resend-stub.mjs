@@ -5,6 +5,9 @@ import { createServer } from 'node:http';
 
 const port = Number(process.env.STUB_PORT ?? 3199);
 let last = null;
+// Recent payloads, newest last, so parallel tests can find THEIR message by a unique marker.
+const recent = [];
+const RECENT_LIMIT = 100;
 
 const server = createServer((req, res) => {
   const chunks = [];
@@ -21,6 +24,13 @@ const server = createServer((req, res) => {
       return;
     }
 
+    if (req.method === 'GET' && req.url?.startsWith('/__find')) {
+      // GET /__find?q=marker -> the newest received payload whose raw body contains the marker.
+      const q = new URL(req.url, 'http://stub').searchParams.get('q') ?? '';
+      const hit = q ? [...recent].reverse().find((entry) => entry.raw.includes(q)) : undefined;
+      send(hit ? 200 : 404, hit ?? null);
+      return;
+    }
     if (req.method === 'POST' && req.url === '/emails') {
       let payload = null;
       try {
@@ -29,6 +39,8 @@ const server = createServer((req, res) => {
         payload = null;
       }
       last = { headers: req.headers, raw, payload };
+      recent.push(last);
+      if (recent.length > RECENT_LIMIT) recent.shift();
       if (raw.includes('[force-fail]')) {
         send(500, { name: 'application_error', message: 'stub failure', statusCode: 500 });
         return;

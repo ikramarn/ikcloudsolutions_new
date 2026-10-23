@@ -17,3 +17,4 @@ export const test = base.extend<{ clientIp: string }>({
 });
 
 export { expect };
+export type { APIRequestContext, Page } from '@playwright/test';

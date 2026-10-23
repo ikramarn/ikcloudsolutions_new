@@ -21,6 +21,9 @@ if (tier === 'production' && !hasTurnstileSecret) {
 }
 
 const nextConfig: NextConfig = {
+  // Only the Playwright suite sets this: its second build (with a Turnstile site key) must not
+  // overwrite the first one. Unset everywhere else, so the default `.next` is used.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
   poweredByHeader: false,
   reactStrictMode: true,
   typedRoutes: true,

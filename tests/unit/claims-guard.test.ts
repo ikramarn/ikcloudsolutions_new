@@ -5,6 +5,7 @@ import { pricingConfig, type PricingConfig } from '@/config/pricing';
 import { derivableFigures, extractGuardableText, underivableFigures } from './claims-guard.html';
 import { STRICT_ALLOWLIST } from './claims-guard.config';
 import { RULES, type GuardRule } from './claims-guard.rules';
+import { findViolations, globToRegExp, type SourceFile } from './claims-guard.scan';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 
@@ -12,71 +13,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 // Helpers
 // ---------------------------------------------------------------------------------------------
 
-interface SourceFile {
-  path: string;
-  content: string;
-}
-
-interface Violation {
-  ruleId: string;
-  path: string;
-  line: number;
-  snippet: string;
-}
-
-function globToRegExp(glob: string): RegExp {
-  let pattern = '';
-  for (let i = 0; i < glob.length; i += 1) {
-    const char = glob.charAt(i);
-    if (char === '*' && glob.charAt(i + 1) === '*') {
-      if (glob.charAt(i + 2) === '/') {
-        pattern += '(?:.*/)?';
-        i += 2;
-      } else {
-        pattern += '.*';
-        i += 1;
-      }
-    } else if (char === '*') pattern += '[^/]*';
-    else if (char === '?') pattern += '[^/]';
-    else pattern += char.replace(/[.+^${}()|[\]\\]/g, '\\$&');
-  }
-  return new RegExp(`^${pattern}$`);
-}
-
-function matchesAny(filePath: string, globs: readonly string[]): boolean {
-  return globs.some((glob) => globToRegExp(glob).test(filePath));
-}
-
-/** Applies the rules that cover `scope` to (path, content) pairs. */
-function findViolations(
-  files: readonly SourceFile[],
-  rules: readonly GuardRule[] = RULES,
-  scope: 'source' | 'built-html' = 'source',
-): Violation[] {
-  const found: Violation[] = [];
-  for (const file of files) {
-    const ext = path.extname(file.path).toLowerCase();
-    for (const rule of rules) {
-      if (rule.scope !== scope && rule.scope !== 'both') continue;
-      if (rule.excludeExt?.includes(ext)) continue;
-      if (matchesAny(file.path, rule.allow)) continue;
-      const lines = file.content.split(/\r?\n/);
-      lines.forEach((text, index) => {
-        if (rule.re.test(text)) {
-          found.push({
-            ruleId: rule.id,
-            path: file.path,
-            line: index + 1,
-            snippet: text.trim().slice(0, 120),
-          });
-        }
-      });
-    }
-  }
-  return found;
-}
-
-const SKIP_DIRS = new Set(['node_modules', '.next', '.git', '.worktrees', 'legacy', 'coverage']);
+const SKIP_DIRS = new Set(['node_modules', '.next', '.git', '.worktrees', 'coverage']);
 const TEXT_EXT = new Set([
   '.ts',
   '.tsx',
@@ -115,7 +52,7 @@ function readTextFiles(paths: readonly string[]): SourceFile[] {
     .map((file) => ({ path: file, content: fs.readFileSync(path.join(root, file), 'utf8') }));
 }
 
-/** src/**, public text files, docs/** and README.md. legacy/** is excluded by walk(). */
+/** src/**, public text files, docs/** and README.md. */
 function sourceFiles(): SourceFile[] {
   const paths = [...walk('src'), ...walk('public'), ...walk('docs')];
   if (fs.existsSync(path.join(root, 'README.md'))) paths.push('README.md');
@@ -377,10 +314,6 @@ describe('claims-guard source scan', () => {
   it('finds no violations in src, public text files, docs and README', () => {
     const violations = findViolations(sourceFiles());
     expect(violations.map((v) => `${v.ruleId} ${v.path}:${v.line} ${v.snippet}`)).toEqual([]);
-  });
-
-  it('does not scan legacy/**', () => {
-    expect(walk('.').some((file) => file.startsWith('legacy/'))).toBe(false);
   });
 });
 

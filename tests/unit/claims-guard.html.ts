@@ -34,6 +34,19 @@ function isJsonLdScript(attributes: string): boolean {
   return /\btype\s*=\s*["']?application\/ld\+json["']?/i.test(attributes);
 }
 
+/** Visible text nodes only (no title, meta or JSON-LD); entities decoded, whitespace collapsed. */
+export function visibleHtmlText(html: string): string {
+  const visible = html
+    .replace(/<!--[\s\S]*?-->/g, ' ')
+    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<noscript\b[\s\S]*?<\/noscript>/gi, ' ')
+    .replace(/<title\b[\s\S]*?<\/title>/gi, ' ')
+    .replace(/self\.__next_f\.push\(\[[\s\S]*?\]\)/g, ' ')
+    .replace(/<[^>]*>/g, ' ');
+  return decodeEntities(visible).replace(/\s+/g, ' ').trim();
+}
+
 export function extractGuardableText(html: string): string {
   const pieces: string[] = [];
 
@@ -58,15 +71,7 @@ export function extractGuardableText(html: string): string {
   }
 
   // Visible text: drop scripts, styles, noscript, comments, flight pushes and tags.
-  const visible = html
-    .replace(/<!--[\s\S]*?-->/g, ' ')
-    .replace(/<script\b[\s\S]*?<\/script>/gi, ' ')
-    .replace(/<style\b[\s\S]*?<\/style>/gi, ' ')
-    .replace(/<noscript\b[\s\S]*?<\/noscript>/gi, ' ')
-    .replace(/<title\b[\s\S]*?<\/title>/gi, ' ')
-    .replace(/self\.__next_f\.push\(\[[\s\S]*?\]\)/g, ' ')
-    .replace(/<[^>]*>/g, ' ');
-  pieces.push(decodeEntities(visible));
+  pieces.push(visibleHtmlText(html));
 
   return pieces.join(' ').replace(/\s+/g, ' ').trim();
 }
