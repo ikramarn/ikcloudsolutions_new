@@ -4,18 +4,18 @@ All 40 pinned packages from the design manifest were checked with `npm view <nam
 
 ## Substitutions
 
-| Name | Planned | Actual | Reason |
-| ---- | ------- | ------ | ------ |
-| (none) | | | Every planned version exists and satisfies its peer and engine ranges. |
+| Name   | Planned | Actual | Reason                                                                 |
+| ------ | ------- | ------ | ---------------------------------------------------------------------- |
+| (none) |         |        | Every planned version exists and satisfies its peer and engine ranges. |
 
 ## Deliberate version holds
 
-| Package | Held at | Why |
-| ------- | ------- | --- |
-| typescript | 6.0.3 | `typescript-eslint` (via `eslint-config-next`) requires `<6.1.0`; the registry `latest` (7.x) is not supported yet. |
-| eslint | 9.39.5 | `eslint-plugin-react` and `eslint-plugin-jsx-a11y` only declare support up to ESLint 9. npm prints a deprecation notice for 9.x; it is expected until those plugins support ESLint 10. |
-| jsdom | 29.1.1 | jsdom 30 needs Node `^24.15`; the dev machine runs 24.12.0. |
-| @types/node | 24.19.2 | Major version matches the Node 24 runtime. |
+| Package     | Held at | Why                                                                                                                                                                                    |
+| ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| typescript  | 6.0.3   | `typescript-eslint` (via `eslint-config-next`) requires `<6.1.0`; the registry `latest` (7.x) is not supported yet.                                                                    |
+| eslint      | 9.39.5  | `eslint-plugin-react` and `eslint-plugin-jsx-a11y` only declare support up to ESLint 9. npm prints a deprecation notice for 9.x; it is expected until those plugins support ESLint 10. |
+| jsdom       | 29.1.1  | jsdom 30 needs Node `^24.15`; the dev machine runs 24.12.0.                                                                                                                            |
+| @types/node | 24.19.2 | Major version matches the Node 24 runtime.                                                                                                                                             |
 
 ## Engines checked
 
