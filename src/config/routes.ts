@@ -191,6 +191,105 @@ export const routes: readonly RouteEntry[] = [
     parent: '/ai-agents',
     ogImagePath: '/og/ai-agents',
   },
+  {
+    path: '/academy',
+    title: 'IK Cloud Academy (Demo)',
+    description:
+      'A demo of IK Cloud Academy: sample Kubernetes, AWS, Terraform and DevSecOps lessons. Placeholder content, not a paid course.',
+    indexable: false,
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Academy',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/academy/studio',
+    title: 'Academy Course Editor (Demo)',
+    description:
+      'A demo course editor for IK Cloud Academy. It runs only in your browser and nothing you create is saved on our servers.',
+    indexable: false,
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Course editor',
+    parent: '/academy',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/privacy',
+    title: 'Privacy Policy (Draft)',
+    description:
+      'Draft privacy policy for IK Cloud Solutions: what personal information we collect, why, who we share it with and your UK GDPR rights.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Privacy',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/terms',
+    title: 'Terms of Service (Draft)',
+    description:
+      'Draft terms of service outline for businesses ordering consultancy or the AI Front Desk from IK Cloud Solutions in Glenrothes, Scotland.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Terms',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/acceptable-use',
+    title: 'Acceptable Use Policy (Draft)',
+    description:
+      'Draft acceptable use policy for the AI Front Desk: what is not allowed, what we require and what happens if the policy is broken.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Acceptable use',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/cookies',
+    title: 'Cookies and Browser Storage (Draft)',
+    description:
+      'Every item this website stores in your browser or requests from a third party, and how to change or withdraw your cookie choice.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Cookies',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/refund-and-cancellation',
+    title: 'Refunds and Cancellation (Draft)',
+    description:
+      'Draft refund and cancellation summary: monthly and annual plans, the 14-day window, setup fees and third-party costs.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Refunds and cancellation',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/security',
+    title: 'Security Statement (Draft)',
+    description:
+      'What IK Cloud Solutions does today to protect this website, stated plainly, including the certifications we do not hold.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'Security',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
+  {
+    path: '/dpa-summary',
+    title: 'Data Processing Summary (Draft)',
+    description:
+      'Draft plain-English summary of how IK Cloud Solutions processes personal data for AI Front Desk customers, with planned subprocessors.',
+    indexable: 'when-legal-reviewed',
+    lastModified: '2026-10-22',
+    breadcrumbLabel: 'DPA summary',
+    parent: '/',
+    ogImagePath: '/og/default',
+  },
 ];
 
 export function findRoute(path: string): RouteEntry | undefined {
