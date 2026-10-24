@@ -68,8 +68,10 @@ describe('removed-content archive', () => {
   });
 
   it('redacts the founder password', () => {
-    expect(source).not.toContain('password123');
-    expect(source).toContain('password: "[REDACTED]"');
+    // Every password value in the archive must be the redaction marker, never a real string.
+    const values = [...source.matchAll(/password:\s*"([^"]*)"/g)].map((match) => match[1]);
+    expect(values.length).toBeGreaterThan(0);
+    expect(values.every((value) => value === '[REDACTED]')).toBe(true);
   });
 
   it('gives every entry a unique id and a reinstatement requirement', () => {
